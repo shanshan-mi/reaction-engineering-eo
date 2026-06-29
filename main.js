@@ -95,9 +95,9 @@ async function ensureAlphaCasesLoaded(alphaValueNumeric) {
   return data;
 }
 
-function updateControlLabels() {
-  alphaValue.textContent = formatNumber(getCurrentAlpha(), 1);
-  phiValue.textContent = formatNumber(getCurrentPhi(), 1);
+function updateControlLabels(alpha, phi) {
+  alphaValue.textContent = formatNumber(alpha, 1);
+  phiValue.textContent = formatNumber(phi, 1);
 }
 
 function scenarioLabel(name) {
@@ -105,10 +105,19 @@ function scenarioLabel(name) {
 }
 
 async function render() {
-  updateControlLabels();
   const alpha = getCurrentAlpha();
-  const phi = getCurrentPhi();
   const alphaData = await ensureAlphaCasesLoaded(alpha);
+  const phiValues = alphaData.phi_values;
+
+  phiRange.max = String(phiValues.length - 1);
+  if (appState.currentPhiIndex > phiValues.length - 1) {
+    appState.currentPhiIndex = phiValues.length - 1;
+    phiRange.value = String(appState.currentPhiIndex);
+  }
+
+  const phi = phiValues[appState.currentPhiIndex];
+  updateControlLabels(alpha, phi);
+
   const caseData = alphaData.cases[appState.currentPhiIndex];
   const fieldName = fieldSelect.value;
   const radialGrid = alphaData.radial_grid;
@@ -189,11 +198,8 @@ async function updateScenario(name) {
   appState.currentScenario = name;
   const manifest = getScenarioManifest();
   alphaRange.max = String(manifest.alpha_values.length - 1);
-  phiRange.max = String(manifest.phi_values.length - 1);
   appState.currentAlphaIndex = Math.min(appState.currentAlphaIndex, manifest.alpha_values.length - 1);
-  appState.currentPhiIndex = Math.min(appState.currentPhiIndex, manifest.phi_values.length - 1);
   alphaRange.value = String(appState.currentAlphaIndex);
-  phiRange.value = String(appState.currentPhiIndex);
   await render();
 }
 
