@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "scenarios": [
+    {
+      "name": "nonisothermal",
+      "path": "nonisothermal/manifest.json",
+      "beta_s": 0.153,
+      "description": "nonisothermal coupled case"
+    },
+    {
+      "name": "isothermal",
+      "path": "isothermal/manifest.json",
+      "beta_s": 0.0,
+      "description": "isothermal comparison"
+    }
+  ]
+}

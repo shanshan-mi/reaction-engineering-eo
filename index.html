@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EO 颗粒内耦合分布交互展示</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div class="hero-kicker">Interactive Intraparticle Visualization</div>
+        <h1>EO 颗粒内温度-浓度-选择性交互展示</h1>
+      </header>
+
+      <main class="layout">
+        <section class="controls card">
+          <h2>参数控制</h2>
+          <p class="controls-subtitle">切换工况参数，动态读取对应颗粒内分布结果。</p>
+          <div class="controls-grid">
+            <label class="control-group">
+              <span>情景</span>
+              <select id="scenarioSelect"></select>
+            </label>
+
+            <label class="control-group">
+              <span>显示场</span>
+              <select id="fieldSelect">
+                <option value="selectivity">局部选择性 S</option>
+                <option value="temperature_C">局部温度 T / °C</option>
+              </select>
+            </label>
+
+            <div class="control-group">
+              <div class="label-row">
+                <span>活性分布参数</span>
+                <strong id="alphaValue"></strong>
+              </div>
+              <input id="alphaRange" type="range" min="0" max="0" step="1" value="0" />
+            </div>
+
+            <div class="control-group">
+              <div class="label-row">
+                <span>Thiele 模数</span>
+                <strong id="phiValue"></strong>
+              </div>
+              <input id="phiRange" type="range" min="0" max="0" step="1" value="0" />
+            </div>
+          </div>
+        </section>
+
+        <section class="card metrics-card">
+          <div class="card-head">
+            <h2>当前工况摘要</h2>
+          </div>
+          <div id="metricsGrid" class="metrics-grid"></div>
+        </section>
+
+        <section class="plots-grid">
+          <div class="card plot-card">
+            <div class="card-head">
+              <h2>颗粒截面云图</h2>
+              <p id="heatmapCaption"></p>
+            </div>
+            <div id="heatmapPlot" class="plot"></div>
+          </div>
+
+          <div class="card plot-card">
+            <div class="card-head">
+              <h2>径向分布曲线</h2>
+              <p id="profileCaption"></p>
+            </div>
+            <div id="profilesPlot" class="plot"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
